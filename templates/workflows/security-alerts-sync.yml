@@ -1,0 +1,33 @@
+name: security-alerts-sync
+
+on:
+  schedule:
+    # Daily, off-peak. Triage SLA is enforced by the script.
+    - cron: "23 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+  security-events: read
+
+concurrency:
+  group: security-alerts-sync
+  cancel-in-progress: false
+
+jobs:
+  route:
+    name: route alerts to issues
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # Use a personal token when the default GITHUB_TOKEN cannot read one of
+      # the alert sources. Never store the value in the repository.
+      - name: Route alerts
+        env:
+          GH_TOKEN: ${{ secrets.SECURITY_ALERTS_TOKEN || github.token }}
+        run: node scripts/security-alerts-sync.mjs --apply --enforce-sla

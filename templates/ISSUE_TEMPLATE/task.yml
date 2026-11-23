@@ -1,0 +1,93 @@
+name: Task
+description: A scoped unit of work with observable acceptance criteria.
+title: "[task] "
+labels: ["needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A task is a section in `specs/changes/<change-id>/tasks.md`. It must
+        have an observable definition of done and an explicit out-of-scope.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is the problem, in one paragraph?
+      placeholder: The parser drops empty input instead of preserving it.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How will a reviewer observe that this is done? Name the command, input or rendered result.
+      placeholder: |
+        - `node test/parser.test.mjs` passes the empty-input case.
+        - The API returns `[]` for an empty document.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What is in scope?
+    validations:
+      required: true
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of scope
+      description: What will this task deliberately not do?
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification plan
+      description: Which tests or checks prove the change? Include the universal mutation tier.
+      placeholder: |
+        - `node test/parser.test.mjs`
+        - `node mutation/revert-fix.mjs --base origin/main`
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0
+        - P1
+        - P2
+        - P3
+      default: 2
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - S1
+        - S2
+        - S3
+        - S4
+        - S-
+      default: 4
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - app
+        - infra
+        - docs
+        - design
+    validations:
+      required: true
+  - type: textarea
+    id: blockers
+    attributes:
+      label: Blocked by
+      description: Issue numbers or task sections, one per line. Leave empty if none.

@@ -1,0 +1,59 @@
+{
+  "timeoutMs": 900000,
+  "adapters": [
+    {
+      "id": "rust-cargo-mutants",
+      "enabled": false,
+      "globs": ["**/*.rs"],
+      "command": [
+        "cargo",
+        "mutants",
+        "--in-diff",
+        "{diff}",
+        "--timeout",
+        "120",
+        "--build-timeout",
+        "300"
+      ],
+      "install": "cargo install cargo-mutants --locked",
+      "proves": "per-mutant survival in the changed Rust code"
+    },
+    {
+      "id": "js-stryker",
+      "enabled": false,
+      "globs": ["**/*.js", "**/*.mjs", "**/*.ts", "**/*.tsx"],
+      "command": ["npx", "stryker", "run", "--mutate", "{files}"],
+      "install": "npm install --save-dev @stryker-mutator/core",
+      "proves": "per-mutant survival in the changed JavaScript or TypeScript"
+    },
+    {
+      "id": "python-mutmut",
+      "enabled": false,
+      "globs": ["**/*.py"],
+      "command": ["mutmut", "run", "--paths-to-mutate", "{files}"],
+      "install": "pip install mutmut",
+      "proves": "per-mutant survival in the changed Python"
+    },
+    {
+      "id": "java-pitest",
+      "enabled": false,
+      "globs": ["**/*.java"],
+      "command": [
+        "mvn",
+        "-q",
+        "test",
+        "org.pitest:pitest-maven:mutationCoverage"
+      ],
+      "install": "configure the pitest-maven plugin in pom.xml",
+      "proves": "per-mutant survival in the changed Java"
+    },
+    {
+      "id": "go-mutesting",
+      "enabled": false,
+      "globs": ["**/*.go"],
+      "command": ["go-mutesting", "{files}"],
+      "install": "go install github.com/avito-tech/go-mutesting/cmd/go-mutesting@latest",
+      "proves": "per-mutant survival in the changed Go"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "testCommand": ["<python>", "-m", "unittest", "test_calc.py"],
+  "testGlobs": ["**/test_*.py"],
+  "expectExit": 1,
+  "expectOutput": "universal-mutation: NOT-CAUGHT"
+}

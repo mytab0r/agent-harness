@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Process and gates
+    url: https://github.com/OWNER/REPO/blob/main/docs/process.md
+    about: Read the spec-first lifecycle and the role boundaries before opening work. Replace OWNER/REPO after copying this file.
+  - name: Security policy
+    url: https://github.com/OWNER/REPO/blob/main/docs/security-alerts.md
+    about: Do not report a vulnerability in a public issue; follow the security routing process.

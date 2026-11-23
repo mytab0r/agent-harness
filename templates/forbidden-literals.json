@@ -1,0 +1,30 @@
+{
+  "caseInsensitive": true,
+  "excludeGlobs": [
+    "node_modules/**",
+    ".git/**",
+    "dist/**",
+    "target/**",
+    "coverage/**",
+    "**/*.lock"
+  ],
+  "maxFileBytes": 2097152,
+  "rules": [
+    {
+      "id": "ref-site-a",
+      "pattern": "ref-site-a\\.example",
+      "reason": "Reference-site identity must not leak into product files; use ref-site-a in reports."
+    },
+    {
+      "id": "internal-host",
+      "pattern": "\\.internal\\.example",
+      "reason": "Internal hostnames are not public."
+    },
+    {
+      "id": "token-literal",
+      "pattern": "(ghp|github_pat)_[A-Za-z0-9_]{20,}",
+      "reason": "A token-looking literal must never be committed."
+    }
+  ],
+  "allow": []
+}

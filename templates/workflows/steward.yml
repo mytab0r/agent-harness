@@ -1,0 +1,30 @@
+name: steward
+
+on:
+  schedule:
+    # Weekly. The steward produces questions; a person makes the decisions.
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+concurrency:
+  group: steward
+  cancel-in-progress: false
+
+jobs:
+  report:
+    name: relevance review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build the rolling steward report
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/steward.mjs --apply

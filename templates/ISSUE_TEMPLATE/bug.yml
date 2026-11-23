@@ -1,0 +1,91 @@
+name: Bug
+description: A reproducible defect with expected and actual behavior.
+title: "[bug] "
+labels: ["needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A bug report is not a fix request yet. The first review decides the
+        severity and whether it needs a spec change.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is broken?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Exact steps, input and environment.
+      placeholder: |
+        1. Run `node app.mjs --input empty`
+        2. Observe the exit code
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include the error, stack trace or screenshot artifact link.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Command output, `file:line`, logs or a CI artifact link. Never paste a secret.
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - S1
+        - S2
+        - S3
+        - S4
+        - S-
+      default: 1
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0
+        - P1
+        - P2
+        - P3
+      default: 2
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - app
+        - infra
+        - docs
+        - design
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Fix acceptance
+      description: How will a reviewer know the defect is fixed and cannot silently return?
+      placeholder: |
+        - A regression test fails on the current code and passes after the fix.
+        - The universal mutation tier reports PROVEN.
+    validations:
+      required: true

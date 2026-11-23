@@ -1,0 +1,57 @@
+{
+  "requiredSections": [
+    { "id": "summary", "heading": "Summary", "minChars": 20 },
+    { "id": "task", "heading": "Task" },
+    { "id": "verification", "heading": "Verification" },
+    { "id": "mutation", "heading": "Mutation proof" },
+    { "id": "risk", "heading": "Risk and rollback", "minChars": 10 },
+    { "id": "review", "heading": "Review" }
+  ],
+  "task": {
+    "keyPattern": "^[A-Z][A-Z0-9]*-[0-9]+$",
+    "requireClosingReference": true,
+    "closingKeywords": ["Closes", "Fixes", "Resolves"],
+    "docsOnlyGlobs": [
+      "docs/**",
+      "specs/**",
+      "templates/**",
+      "scripts/**",
+      ".github/**",
+      "**/*.md"
+    ]
+  },
+  "verification": {
+    "allowNotApplicable": true,
+    "requireCommand": true
+  },
+  "mutation": {
+    "passTokens": ["PROVEN", "NOT-APPLICABLE"],
+    "failTokens": ["NOT-CAUGHT", "BASELINE-RED", "ERROR", "FAILED", "MISSING-TOOL"]
+  },
+  "review": {
+    "requireAuthorAndReviewer": true,
+    "selfReviewTokens": ["self", "same", "author", "none", "n/a"]
+  },
+  "placeholders": [
+    "<command>",
+    "<output>",
+    "<n>",
+    "<reason>",
+    "<path>",
+    "<what changed>",
+    "<reviewer>",
+    "<author>",
+    "<link>",
+    "<date>",
+    "<paste",
+    "<non-test",
+    "<test",
+    "<...>",
+    "TODO",
+    "TBD",
+    "CHANGEME",
+    "CHANGE ME",
+    "FILL ME",
+    "FIXME"
+  ]
+}

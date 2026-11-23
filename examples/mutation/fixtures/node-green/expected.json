@@ -1,0 +1,6 @@
+{
+  "testCommand": ["node", "math.test.mjs"],
+  "testGlobs": ["**/*.test.mjs"],
+  "expectExit": 1,
+  "expectOutput": "universal-mutation: NOT-CAUGHT"
+}

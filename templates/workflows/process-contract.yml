@@ -1,0 +1,30 @@
+name: process-contract
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
+concurrency:
+  group: process-contract-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  contract:
+    name: process contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check the PR body, task key, evidence and reviewer
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/check-process.mjs --pr "${{ github.event.pull_request.number }}"
+      - name: Check forbidden literals
+        run: node scripts/check-forbidden-literals.mjs

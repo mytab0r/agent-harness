@@ -1,0 +1,53 @@
+name: mutation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mutation-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  universal:
+    name: mutation tier 1 (universal)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # Add the runtime your testCommand needs. The universal tier does not
+      # know the language; it only reverts non-test hunks and runs the command.
+      # - uses: actions/setup-python@v5
+      #   with:
+      #     python-version: "3.12"
+      - name: Revert the non-test change and require the test to fail
+        run: node mutation/revert-fix.mjs --base "origin/${{ github.base_ref }}"
+
+  adapters:
+    name: mutation tier 2 (adapters)
+    needs: universal
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # Install only the adapters you enable in mutation/adapters.json.
+      # Examples:
+      # - uses: taiki-e/install-action@v2
+      #   with:
+      #     tool: cargo-mutants
+      # - run: pip install mutmut
+      - name: Run enabled language adapters
+        run: node mutation/run-adapters.mjs --base "origin/${{ github.base_ref }}"

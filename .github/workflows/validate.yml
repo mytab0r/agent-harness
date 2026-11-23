@@ -1,0 +1,52 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: scripts, fixtures and workflows
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Syntax-check every published .mjs
+        run: |
+          set -e
+          find . -name '*.mjs' -not -path './.git/*' -print0 | while IFS= read -r -d '' file; do
+            node --check "$file" || exit 1
+          done
+      - name: Process contract self-test
+        run: node templates/check-process.mjs --self-test
+      - name: Forbidden literals self-test
+        run: node templates/check-forbidden-literals.mjs --self-test
+      - name: Board sync self-test
+        run: node templates/sync-board.mjs --self-test
+      - name: Security alerts self-test
+        run: node templates/security-alerts-sync.mjs --self-test
+      - name: Steward self-test
+        run: node templates/steward.mjs --self-test
+      - name: Polyglot mutation self-test
+        run: node examples/mutation/run-selftest.mjs
+      - name: Parse every workflow and issue form
+        run: |
+          python -m pip install --quiet pyyaml
+          python - <<'PY'
+          import glob
+          import yaml
+
+          paths = glob.glob("templates/workflows/*.yml") + glob.glob("templates/ISSUE_TEMPLATE/*.yml")
+          for path in paths:
+              with open(path, encoding="utf-8") as handle:
+                  yaml.safe_load(handle)
+              print(f"yaml ok: {path}")
+          PY

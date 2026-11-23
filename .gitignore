@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+node_modules/
+target/
+dist/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+.claude/worktrees/
+.claude/ui-audit/
+mutation/*.diff
+mutation/.tmp/

@@ -1,0 +1,20 @@
+{
+  "testCommand": ["node", "test/all.test.mjs"],
+  "testGlobs": [
+    "**/*.test.mjs",
+    "**/*-test.mjs",
+    "**/test_*.py",
+    "**/*_test.py",
+    "tests/**",
+    "test/**"
+  ],
+  "ignoreGlobs": [
+    "docs/**",
+    "specs/**",
+    "**/*.md",
+    ".github/**"
+  ],
+  "timeoutMs": 120000,
+  "allowDirty": false,
+  "env": {}
+}

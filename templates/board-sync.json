@@ -1,0 +1,44 @@
+{
+  "repo": "",
+  "keyPrefix": "TASK",
+  "changesDir": "specs/changes",
+  "project": {
+    "owner": "",
+    "number": 0
+  },
+  "labels": {
+    "epic": "epic",
+    "changePrefix": "change:",
+    "areaPrefix": "area:"
+  },
+  "areas": ["app", "infra", "docs", "design"],
+  "areaRules": [
+    { "area": "infra", "keywords": ["ci", "deploy", "infra", "release", "pipeline", "security"] },
+    { "area": "docs", "keywords": ["docs", "documentation", "readme", "guide"] },
+    { "area": "design", "keywords": ["design", "ui", "ux", "css", "layout"] }
+  ],
+  "defaultArea": "app",
+  "defaultPriority": "P2",
+  "defaultSeverity": "S-",
+  "milestonesFile": "data/milestones.json",
+  "fieldNames": {
+    "area": "Area",
+    "priority": "Priority",
+    "severity": "Severity",
+    "start": "Start date",
+    "target": "Target date",
+    "actualStart": "Actual start",
+    "actualEnd": "Actual end",
+    "progress": "Progress",
+    "status": "Status"
+  },
+  "statusOptions": {
+    "todo": "Todo",
+    "inProgress": "In Progress",
+    "done": "Done"
+  },
+  "markers": {
+    "epic": "<!-- harness-change: {id} -->",
+    "task": "<!-- harness-task: {id}/{slug} -->"
+  }
+}

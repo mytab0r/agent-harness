@@ -1,0 +1,13 @@
+{
+  "repo": "",
+  "staleDays": 30,
+  "maxQuestions": 25,
+  "issueTitle": "Steward review",
+  "labels": {
+    "steward": "steward",
+    "hold": ["owner-decision", "pinned"]
+  },
+  "acceptanceExemptLabels": ["bug", "security", "security-alert"],
+  "changesDir": "specs/changes",
+  "duplicateThreshold": 0.8
+}

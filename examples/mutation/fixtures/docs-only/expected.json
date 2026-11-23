@@ -1,0 +1,7 @@
+{
+  "testCommand": ["node", "smoke.test.mjs"],
+  "testGlobs": ["**/*.test.mjs"],
+  "ignoreGlobs": ["**/*.md", "docs/**"],
+  "expectExit": 0,
+  "expectOutput": "universal-mutation: NOT-APPLICABLE"
+}

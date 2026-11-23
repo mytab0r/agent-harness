@@ -1,0 +1,22 @@
+{
+  "repo": "",
+  "labels": {
+    "issue": "security",
+    "managed": "security-alert",
+    "resolved": "security-resolved"
+  },
+  "holdLabels": ["owner-decision", "pinned"],
+  "sources": ["code-scanning", "dependabot", "secret-scanning"],
+  "severity": {
+    "critical": { "priority": "P0", "severity": "S1", "slaDays": 1 },
+    "high": { "priority": "P1", "severity": "S2", "slaDays": 7 },
+    "medium": { "priority": "P2", "severity": "S3", "slaDays": 30 },
+    "low": { "priority": "P3", "severity": "S4", "slaDays": 90 }
+  },
+  "areaRules": [
+    { "area": "infra", "keywords": [".github/", "docker", "deploy", "infra", "ci"] },
+    { "area": "docs", "keywords": ["docs/", "readme"] },
+    { "area": "app", "keywords": ["src/", "app/", "lib/", "packages/"] }
+  ],
+  "defaultArea": "infra"
+}
