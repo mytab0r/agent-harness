@@ -411,7 +411,7 @@ function main() {
       // even though its content is correct. Only a tree that was clean at the
       // start may be reset to HEAD; a dirty tree is never destroyed.
       if (!allowDirty) {
-        const dirtyAfterApply = git(root, ["status", "--porcelain"]);
+        const dirtyAfterApply = git(root, ["status", "--porcelain", "--untracked-files=no"]);
         if (dirtyAfterApply) {
           git(root, ["checkout", "--", "."]);
           restored = true;
@@ -421,10 +421,21 @@ function main() {
         console.error("error: could not restore the non-test files after the mutation run");
         process.exitCode = 2;
       }
-      const remaining = git(root, ["status", "--porcelain"]);
+      // Tracked files must match HEAD. Untracked files created by the test
+      // command (bytecode caches, coverage output) do not invalidate the proof;
+      // report them instead of failing the gate.
+      const remaining = git(root, ["status", "--porcelain", "--untracked-files=no"]);
       if (remaining && !allowDirty) {
         console.error(`error: the working tree was not restored cleanly:\n${remaining}`);
         process.exitCode = 2;
+      }
+      const untracked = git(root, ["status", "--porcelain", "--untracked-files=normal"])
+        .split(/\r?\n/)
+        .filter((line) => line.startsWith("??"))
+        .map((line) => line.slice(3).trim())
+        .filter(Boolean);
+      if (untracked.length > 0) {
+        console.warn(`warning: the test command left untracked files: ${untracked.join(", ")}`);
       }
       try {
         fs.unlinkSync(patchFile);

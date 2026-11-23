@@ -50,6 +50,7 @@ function runFixture(name) {
   try {
     git(temp, ["init"]);
     copyDir(path.join(directory, "base"), temp);
+    fs.writeFileSync(path.join(temp, ".gitignore"), "__pycache__/\n*.pyc\n", "utf8");
 
     const testCommand = expected.testCommand.map((part) =>
       part === "<python>" ? PYTHON : part,

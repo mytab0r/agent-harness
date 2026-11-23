@@ -4,6 +4,8 @@ node_modules/
 target/
 dist/
 coverage/
+__pycache__/
+*.pyc
 *.log
 .env
 .env.*
